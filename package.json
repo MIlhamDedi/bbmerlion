@@ -1,6 +1,7 @@
 {
   "name": "matx-react",
   "author": "ui-lib",
+  "homepage": "https://milhamdedi.github.io/bbmerlion",
   "license": "MIT",
   "version": "1.0.0",
   "private": true,
@@ -60,7 +61,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "ghp": "react-scripts build && gh-pages -d build"
+    "ghp": "react-scripts build && gh-pages -d build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -75,6 +78,6 @@
     "@babel/runtime": "^7.5.5",
     "axios-mock-adapter": "^1.17.0",
     "cross-env": "^5.2.0",
-    "gh-pages": "^2.1.1"
+    "gh-pages": "^2.2.0"
   }
 }

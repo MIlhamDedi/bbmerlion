@@ -7,7 +7,7 @@ class BasicForm extends Component {
     console.log(window.location.href);
     const urlPath = window.location.href;
     const cutOff = urlPath.split('/', 4).join('/').length;
-    const filePath = '/pdf' + urlPath.slice(cutOff)
+    const filePath = '/bbmerlion/pdf' + urlPath.slice(cutOff)
     console.log(filePath);
     return (
       <iframe src={filePath} width="100%" height="800px"></iframe>
