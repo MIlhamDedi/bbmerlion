@@ -2,7 +2,7 @@ import { MatxLoadable } from "matx";
 import { authRoles } from "../../auth/authRoles";
 
 const Analytics = MatxLoadable({
-  loader: () => import("./Analytics")
+  loader: () => import("./None")
 })
 
 const dashboardRoutes = [

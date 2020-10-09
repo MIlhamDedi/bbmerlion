@@ -10,35 +10,35 @@ const NotificationDB = {
         name: "chat",
         color: "primary"
       },
-      timestamp: 1570702802573,
-      title: "New message from Devid",
-      subtitle: "Hello, Let's chit chat...",
+      timestamp: 1605283200000,
+      title: "Welcome to BBMerlion v2",
+      subtitle: "Prepare for UEE anywhere, anytime!",
       path: "chat"
     },
-    {
-      id: shortId.generate(),
-      heading: "Alert",
-      icon: {
-        name: "notifications",
-        color: "error"
-      },
-      timestamp: 1570702702573,
-      title: "Server overloaded",
-      subtitle: "Traffice reached 2M",
-      path: "page-layouts/user-profile"
-    },
-    {
-      id: shortId.generate(),
-      heading: "Message",
-      icon: {
-        name: "chat",
-        color: "primary"
-      },
-      timestamp: 1570502502573,
-      title: "New message from Goustove",
-      subtitle: "Hello, Let's chit chat...",
-      path: "chat"
-    }
+    // {
+    //   id: shortId.generate(),
+    //   heading: "Alert",
+    //   icon: {
+    //     name: "notifications",
+    //     color: "error"
+    //   },
+    //   timestamp: 1570702702573,
+    //   title: "Server overloaded",
+    //   subtitle: "Traffice reached 2M",
+    //   path: "page-layouts/user-profile"
+    // },
+    // {
+    //   id: shortId.generate(),
+    //   heading: "Message",
+    //   icon: {
+    //     name: "chat",
+    //     color: "primary"
+    //   },
+    //   timestamp: 1570502502573,
+    //   title: "New message from Goustove",
+    //   subtitle: "Hello, Let's chit chat...",
+    //   path: "chat"
+    // }
   ]
 };
 

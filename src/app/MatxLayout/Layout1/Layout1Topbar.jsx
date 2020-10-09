@@ -77,27 +77,27 @@ class Layout1Topbar extends Component {
                 </IconButton>
 
                 <div className="hide-on-mobile">
-                  <IconButton>
+                  <IconButton href="mailto:muhammadilhamdedi@gmail.com">
                     <Icon>mail_outline</Icon>
                   </IconButton>
 
-                  <IconButton>
+                  {/* <IconButton>
                     <Icon>web_asset</Icon>
                   </IconButton>
 
                   <IconButton>
                     <Icon>star_outline</Icon>
-                  </IconButton>
+                  </IconButton> */}
                 </div>
               </div>
               <div className="flex flex-middle">
-                <MatxSearchBox />
+                {/* <MatxSearchBox /> */}
 
                 <NotificationBar />
 
-                <ShoppingCart></ShoppingCart>
+                {/* <ShoppingCart></ShoppingCart> */}
 
-                <MatxMenu
+                {/* <MatxMenu
                   menuButton={
                     <img
                       className="mx-8 text-middle circular-image-small cursor-pointer"
@@ -136,7 +136,7 @@ class Layout1Topbar extends Component {
                     <Icon> power_settings_new </Icon>
                     <span className="pl-16"> Logout </span>
                   </MenuItem>
-                </MatxMenu>
+                </MatxMenu> */}
               </div>
             </div>
           </div>

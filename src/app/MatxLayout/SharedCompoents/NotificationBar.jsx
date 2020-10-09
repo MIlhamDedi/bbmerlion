@@ -53,7 +53,7 @@ function NotificationBar(props) {
               : parentThemePalette.text.primary
         }}
       >
-        <Badge color="secondary" badgeContent={5}>
+        <Badge color="secondary" badgeContent={1}>
           <Icon>notifications</Icon>
         </Badge>
       </IconButton>

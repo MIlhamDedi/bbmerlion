@@ -39,62 +39,62 @@ export const navigations = [
         icon: "list",
         children: [
           {
-            name: "1. Partial Fraction",
+            name: "Partial Fraction",
             path: "/notes/BBMerlion Notes/Math/1. Partial Fraction.pdf",
             iconText: "1"
           },
           {
-            name: "2. Functions and Graphs",
+            name: "Functions and Graphs",
             path: "/notes/BBMerlion Notes/Math/2. Functions and Graphs.pdf",
             iconText: "1"
           },
           {
-            name: "3. Sequence and Series",
+            name: "Sequence and Series",
             path: "/notes/BBMerlion Notes/Math/3. Sequence and Series.pdf",
             iconText: "1"
           },
           {
-            name: "4. Vector",
+            name: "Vector",
             path: "/notes/BBMerlion Notes/Math/4. Vector.pdf",
             iconText: "1"
           },
           {
-            name: "5. Complex Number",
+            name: "Complex Number",
             path: "/notes/BBMerlion Notes/Math/5. Complex Number.pdf",
             iconText: "1"
           },
           {
-            name: "6. Differentiation",
+            name: "Differentiation",
             path: "/notes/BBMerlion Notes/Math/6. Differentiation.pdf",
             iconText: "1"
           },
           {
-            name: "7. Integral _Maclaurin_s Series",
+            name: "Integral _Maclaurin_s Series",
             path: "/notes/BBMerlion Notes/Math/7. Integral _Maclaurin_s Series.pdf",
             iconText: "1"
           },
           {
-            name: "8. Differential Equation",
+            name: "Differential Equation",
             path: "/notes/BBMerlion Notes/Math/8. Differential Equation.pdf",
             iconText: "1"
           },
           {
-            name: "9. Permutation, Combination, and Probability",
+            name: "Permutation, Combination, and Probability",
             path: "/notes/BBMerlion Notes/Math/9. Permutation, Combination, and Probability.pdf",
             iconText: "1"
           },
           {
-            name: "10. Binomial Distribution",
+            name: "Binomial Distribution",
             path: "/notes/BBMerlion Notes/Math/10. Binomial Distribution.pdf",
             iconText: "1"
           },
           {
-            name: "11. Hypothesis Testing",
+            name: "Hypothesis Testing",
             path: "/notes/BBMerlion Notes/Math/11. Hypothesis Testing.pdf",
             iconText: "1"
           },
           {
-            name: "12. Particle Mechanics (NUS Syllabus)",
+            name: "Particle Mechanics (NUS Syllabus)",
             path: "/notes/BBMerlion Notes/Math/12. Particle Mechanics (NUS Syllabus).pdf",
             iconText: "1"
           },
@@ -105,72 +105,72 @@ export const navigations = [
         icon: "list",
         children: [
           {
-            name: "1. Measurement",
+            name: "Measurement",
             path: "/notes/BBMerlion Notes/Physics/1. Measurement.pdf",
             iconText: "1"
           },
           {
-            name: "2. Kinematics",
+            name: "Kinematics",
             path: "/notes/BBMerlion Notes/Physics/2. Kinematics.pdf",
             iconText: "1"
           },
           {
-            name: "3. Dynamics",
+            name: "Dynamics",
             path: "/notes/BBMerlion Notes/Physics/3. Dynamics.pdf",
             iconText: "1"
           },
           {
-            name: "4. Forces",
+            name: "Forces",
             path: "/notes/BBMerlion Notes/Physics/4. Forces.pdf",
             iconText: "1"
           },
           {
-            name: "5. Energy, Work, and Power",
+            name: "Energy, Work, and Power",
             path: "/notes/BBMerlion Notes/Physics/5. Energy, Work, and Power.pdf",
             iconText: "1"
           },
           {
-            name: "6. Motion in Circle",
+            name: "Motion in Circle",
             path: "/notes/BBMerlion Notes/Physics/6. Motion in Circle.pdf",
             iconText: "1"
           },
           {
-            name: "7. Gravitational Field",
+            name: "Gravitational Field",
             path: "/notes/BBMerlion Notes/Physics/7. Gravitational Field.pdf",
             iconText: "1"
           },
           {
-            name: "8. Oscillations",
+            name: "Oscillations",
             path: "/notes/BBMerlion Notes/Physics/8. Oscillations.pdf",
             iconText: "1"
           },
           {
-            name: "9. Thermal Physics",
+            name: "Thermal Physics",
             path: "/notes/BBMerlion Notes/Physics/9. Thermal Physics.pdf",
             iconText: "1"
           },
           {
-            name: "10. Wave",
+            name: "Wave",
             path: "/notes/BBMerlion Notes/Physics/10. Wave.pdf",
             iconText: "1"
           },
           {
-            name: "11. Electricity and Magnetism",
+            name: "Electricity and Magnetism",
             path: "/notes/BBMerlion Notes/Physics/11. Electricity and Magnetism.pdf",
             iconText: "1"
           },
           {
-            name: "12. Quantum Physics",
+            name: "Quantum Physics",
             path: "/notes/BBMerlion Notes/Physics/12. Quantum Physics.pdf",
             iconText: "1"
           },
           {
-            name: "13. Laser and Semiconductors",
+            name: "Laser and Semiconductors",
             path: "/notes/BBMerlion Notes/Physics/13. Laser and Semiconductors.pdf",
             iconText: "1"
           },
           {
-            name: "14. Nuclear Physics",
+            name: "Nuclear Physics",
             path: "/notes/BBMerlion Notes/Physics/14. Nuclear Physics.pdf",
             iconText: "1"
           },
