@@ -9,8 +9,7 @@ import materialRoutes from "./views/material-kit/MaterialRoutes";
 import dragAndDropRoute from "./views/Drag&Drop/DragAndDropRoute";
 
 import notesRoutes from "./views/notes/FormsRoutes";
-import formsRoutes from "./views/forms/FormsRoutes";
-import mapRoutes from "./views/map/MapRoutes";
+import mapRoutes from "./views/map/MapRouteszzzz";
 
 const redirectRoute = [
   {
