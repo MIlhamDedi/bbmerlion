@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/bbmerlion/precache-manifest.34029ece479775c6d4ee35689bb522b1.js"
+  "/bbmerlion/precache-manifest.ab28d189565d2e939c2f22589aca99e4.js"
 );
 
 self.addEventListener('message', (event) => {
