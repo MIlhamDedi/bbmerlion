@@ -22,8 +22,13 @@ const initials = (name) =>
 const crewPhotoDir = fileURLToPath(new URL("../../public/assets/bbmerlion-archive/crew/", import.meta.url));
 const photoFor = (person) => {
   if (person.photo) return person.photo;
-  const file = `${person.name.toLowerCase().replace(/\s+/g, "-")}.jpg`;
-  return existsSync(join(crewPhotoDir, file)) ? `assets/bbmerlion-archive/crew/${file}` : null;
+  const slug = person.name.toLowerCase().replace(/\s+/g, "-");
+  for (const ext of ["jpg", "jpeg", "png", "webp"]) {
+    if (existsSync(join(crewPhotoDir, `${slug}.${ext}`))) {
+      return `assets/bbmerlion-archive/crew/${slug}.${ext}`;
+    }
+  }
+  return null;
 };
 
 const site = Astro.site ?? new URL("https://bbmerlion.milhamdedi.com");
@@ -57,14 +62,14 @@ const peopleSchema = {
   current="about"
   title="Tentang Kami — BBMerlion"
   description="BBMerlion adalah inisiatif sukarela mahasiswa Indonesia di Singapura untuk membimbing adik-adik SMA menuju NUS, NTU, dan SMU."
-  image="assets/bbmerlion-archive/home.jpg"
+  image="assets/bbmerlion-archive/crew-reunion.jpg"
   schema={peopleSchema}
 >
   <main>
     <section class="page-hero cinematic" aria-labelledby="about-title">
       <div
         class="cinematic-media"
-        style={`background-image: url(${path("assets/bbmerlion-archive/home.jpg")})`}
+        style={`background-image: url(${path("assets/bbmerlion-archive/crew-reunion.jpg")})`}
       >
       </div>
       <div class="shell" style="padding-block: clamp(28px, 5vw, 56px) clamp(40px, 6vw, 64px)">

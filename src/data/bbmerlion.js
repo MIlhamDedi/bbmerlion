@@ -1,6 +1,6 @@
 export const contact = {
-  primaryEmail: "milhamdedi+bbmerlion@gmail.com",
-  originalEmail: "contact.bbmerlion@gmail.com",
+  primaryEmail: "contact.bbmerlion@gmail.com",
+  secondaryEmail: "milhamdedi+bbmerlion@gmail.com",
   twitter: "https://twitter.com/BBMerlion",
   facebookGroup: "https://www.facebook.com/groups/177698779093208/"
 };
@@ -34,6 +34,7 @@ export const campuses = [
     image: "assets/bbmerlion-archive/header-1920.jpg",
     text:
       "Universitas tertua dan terbesar di Singapura, langganan peringkat teratas Asia — kuat di hampir semua bidang, dari teknik sampai kedokteran.",
+    highlights: ["QS Dunia 2027 · #10", "Berdiri 1905", "Kampus terbesar di Singapura"],
     admissionsUrl:
       "https://www.nus.edu.sg/oam/admissions/international-qualifications/admission-requirements",
     admissions: [
@@ -68,6 +69,7 @@ export const campuses = [
     image: "assets/bbmerlion-archive/ntu-900.png",
     text:
       "Kampus dengan program teknik dan sains yang sangat kuat. Banyak materi di Study Desk mengikuti silabus ujian masuknya.",
+    highlights: ["QS Dunia 2027 · #12", "Berdiri 1991", "11 subjek top-10 dunia"],
     admissionsUrl:
       "https://www.ntu.edu.sg/admissions/undergraduate/admission-guide/international-qualifications/Indonesian-SMA-UAN",
     admissions: [
@@ -101,6 +103,7 @@ export const campuses = [
     image: "assets/bbmerlion-archive/smu-900.png",
     text:
       "Universitas di jantung kota Singapura dengan fokus bisnis, manajemen, ekonomi, dan sistem informasi.",
+    highlights: ["Top-100 QS untuk bisnis & manajemen", "Berdiri 2000", "Kelas kecil gaya seminar"],
     admissionsUrl:
       "https://admissions.smu.edu.sg/admissions-requirements/international-and-other-qualifications",
     admissions: [

@@ -26,6 +26,26 @@ const steps = [
   }
 ];
 
+// Timeline: grid col 1 = labels; months Sep..Apr occupy cols 2..9
+const months = ["Sep", "Okt", "Nov", "Des", "Jan", "Feb", "Mar", "Apr"];
+const windows = [
+  { short: "NUS", cols: "3 / 9", label: "Okt – Mar", deadline: false },
+  { short: "NTU", cols: "3 / 7", label: "Okt – Jan", deadline: false },
+  { short: "SMU", cols: "3 / 9", label: "Okt – ±19 Mar", deadline: true }
+];
+
+const documents = [
+  { id: "rapor", text: "Scan rapor kelas 10–12 + terjemahan resmi bahasa Inggris", badges: ["NUS", "NTU", "SMU"] },
+  { id: "ijazah", text: "Ijazah SMA atau surat keterangan lulus (bisa menyusul bila belum lulus)", badges: ["NUS", "NTU", "SMU"] },
+  { id: "paspor", text: "Paspor yang masih berlaku", badges: ["NUS", "NTU", "SMU"] },
+  { id: "inggris", text: "Skor tes bahasa Inggris: IELTS / TOEFL / PTE Academic", badges: ["NTU", "SMU"] },
+  { id: "sat", text: "Skor SAT atau ACT (wajib SMU; di NTU bisa sekaligus jadi bukti bahasa Inggris)", badges: ["SMU"] },
+  { id: "esai", text: "Esai / personal statement", badges: ["NUS", "SMU"] },
+  { id: "rekomendasi", text: "Surat rekomendasi guru — opsional, tapi memperkuat aplikasi", badges: [] },
+  { id: "finansial", text: "Dokumen finansial orang tua (untuk visa dan MOE Tuition Grant)", badges: ["NUS", "NTU", "SMU"] },
+  { id: "foto", text: "Pas foto dan akta kelahiran (administrasi Student's Pass)", badges: ["NUS", "NTU", "SMU"] }
+];
+
 const schema = {
   "@context": "https://schema.org",
   "@type": "ItemList",
@@ -84,6 +104,30 @@ const schema = {
             ))
           }
         </div>
+
+        <div class="tl-scroll" role="img" aria-label="Kalender pendaftaran: NUS Oktober sampai Maret, NTU Oktober sampai Januari, SMU Oktober sampai sekitar 19 Maret">
+          <div class="tl-grid">
+            <span></span>
+            {months.map((month) => <span class="tl-month">{month}</span>)}
+            {
+              windows.map((window) => (
+                <>
+                  <span class="tl-label">{window.short}</span>
+                  <span
+                    class={`tl-bar ${window.deadline ? "deadline" : ""}`}
+                    style={`grid-column: ${window.cols}`}
+                  >
+                    {window.label}
+                  </span>
+                </>
+              ))
+            }
+          </div>
+        </div>
+        <p class="tl-note">
+          Jendela aplikasi untuk perkuliahan mulai Agustus. Hasil seleksi umumnya keluar
+          April–Juni. <strong>●</strong> = ada deadline pasti — cek tanggal resminya tiap tahun.
+        </p>
       </div>
     </section>
 
@@ -109,6 +153,9 @@ const schema = {
                   <h2 id={`uni-${campus.short}`}>{campus.name}</h2>
                 </div>
                 <p class="uni-intro">{campus.text}</p>
+                <div class="uni-highlights">
+                  {campus.highlights.map((highlight) => <span class="uni-highlight">{highlight}</span>)}
+                </div>
                 <dl class="adm-list">
                   {
                     campus.admissions.map((item) => (
@@ -134,6 +181,49 @@ const schema = {
       </div>
     </section>
 
+    <section class="section" aria-labelledby="docs-title" style="padding-top: clamp(24px, 4vw, 40px)">
+      <div class="shell">
+        <div class="section-head">
+          <p class="eyebrow">Checklist dokumen</p>
+          <h2 id="docs-title">Siapkan dokumenmu, centang satu-satu.</h2>
+          <p>
+            Semua yang biasanya diminta ketiga kampus. Centangannya tersimpan di browser ini,
+            sama seperti progres Study Desk-mu.
+          </p>
+        </div>
+        <div class="doc-card">
+          <div class="doc-progress">
+            <span data-doc-count>0 dari {documents.length} siap</span>
+            <div class="bar"><span data-doc-bar></span></div>
+            <button class="doc-reset" type="button" data-doc-reset>Kosongkan</button>
+          </div>
+          {
+            documents.map((doc) => (
+              <div class="doc-row" data-doc={doc.id}>
+                <button
+                  class="check"
+                  type="button"
+                  data-doc-check
+                  aria-pressed="false"
+                  aria-label={`Tandai "${doc.text}" siap`}
+                >
+                  ✓
+                </button>
+                <p>
+                  {doc.text}
+                  {doc.badges.length > 0 && (
+                    <span class="doc-badges">
+                      {doc.badges.map((badge) => <span class="doc-badge">{badge}</span>)}
+                    </span>
+                  )}
+                </p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
     <section class="section" aria-labelledby="campus-ask-title">
       <div class="shell">
         <div class="cta-panel">
@@ -153,4 +243,59 @@ const schema = {
       </div>
     </section>
   </main>
+
+  <script>
+    const STORE_KEY = "bbmerlion-docs-v1";
+
+    function loadStore() {
+      try {
+        return JSON.parse(localStorage.getItem(STORE_KEY)) || {};
+      } catch {
+        return {};
+      }
+    }
+
+    const store = loadStore();
+    const rows = Array.from(document.querySelectorAll("[data-doc]"));
+    const countEl = document.querySelector("[data-doc-count]");
+    const barEl = document.querySelector("[data-doc-bar]");
+
+    function save() {
+      try {
+        localStorage.setItem(STORE_KEY, JSON.stringify(store));
+      } catch {
+        /* private mode: checklist simply not persisted */
+      }
+    }
+
+    function render() {
+      let done = 0;
+      rows.forEach((row) => {
+        const checked = Boolean(store[row.dataset.doc]);
+        if (checked) done += 1;
+        row.classList.toggle("is-done", checked);
+        row.querySelector("[data-doc-check]")?.setAttribute("aria-pressed", String(checked));
+      });
+      if (countEl) countEl.textContent = `${done} dari ${rows.length} siap`;
+      if (barEl) barEl.style.width = rows.length ? `${(done / rows.length) * 100}%` : "0%";
+    }
+
+    rows.forEach((row) => {
+      row.querySelector("[data-doc-check]")?.addEventListener("click", () => {
+        const key = row.dataset.doc;
+        if (store[key]) delete store[key];
+        else store[key] = true;
+        save();
+        render();
+      });
+    });
+
+    document.querySelector("[data-doc-reset]")?.addEventListener("click", () => {
+      rows.forEach((row) => delete store[row.dataset.doc]);
+      save();
+      render();
+    });
+
+    render();
+  </script>
 </BaseLayout>

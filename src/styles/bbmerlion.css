@@ -1247,6 +1247,173 @@ h3 {
   line-height: 1.6;
 }
 
+/* Application timeline (gantt strip) */
+.tl-scroll {
+  margin-top: clamp(28px, 4vw, 40px);
+  overflow-x: auto;
+  padding-bottom: 6px;
+}
+
+.tl-grid {
+  min-width: 680px;
+  display: grid;
+  grid-template-columns: 88px repeat(8, minmax(0, 1fr));
+  gap: 10px 0;
+  align-items: center;
+}
+
+.tl-month {
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink-2);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.tl-label {
+  grid-column: 1;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.tl-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  margin-inline: 4px;
+  border: 1px solid var(--teal);
+  border-radius: 999px;
+  color: var(--teal-deep);
+  background: var(--teal-tint);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+.tl-bar.deadline::after {
+  content: "";
+  position: absolute;
+  right: -5px;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  transform: translateY(-50%);
+  border: 2px solid var(--card);
+  border-radius: 50%;
+  background: var(--red);
+}
+
+.tl-note {
+  margin: 14px 0 0;
+  color: var(--ink-2);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+}
+
+.tl-note strong {
+  color: var(--red);
+}
+
+/* Interactive document checklist */
+.doc-card {
+  margin-top: clamp(28px, 4vw, 40px);
+  padding: clamp(20px, 3vw, 32px);
+  border: 1px solid var(--ink);
+  border-radius: var(--radius);
+  background: var(--card);
+}
+
+.doc-progress {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid var(--ink);
+}
+
+.doc-progress .bar {
+  flex: 1 1 auto;
+}
+
+.doc-progress span {
+  color: var(--ink-2);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  white-space: nowrap;
+}
+
+.doc-reset {
+  border: 0;
+  padding: 0;
+  color: var(--ink-2);
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.doc-reset:hover {
+  color: var(--red);
+}
+
+.doc-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  padding: 13px 2px;
+  border-bottom: 1px dashed var(--line-dash);
+}
+
+.doc-row:last-child {
+  border-bottom: 0;
+}
+
+.doc-row .check {
+  margin-top: 2px;
+}
+
+.doc-row p {
+  margin: 0;
+  font-size: 0.97rem;
+  line-height: 1.55;
+}
+
+.doc-row.is-done p {
+  color: var(--ink-2);
+}
+
+.doc-badges {
+  display: inline-flex;
+  gap: 6px;
+  margin-left: 8px;
+  vertical-align: 2px;
+}
+
+.doc-badge {
+  padding: 1px 7px;
+  border: 1px solid var(--line-dash);
+  border-radius: 4px;
+  color: var(--ink-2);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
 .uni-guide {
   display: grid;
   grid-template-columns: minmax(260px, 0.65fr) minmax(0, 1fr);
@@ -1286,6 +1453,25 @@ h3 {
 .uni-intro {
   margin: 12px 0 0;
   color: var(--ink-2);
+}
+
+.uni-highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.uni-highlight {
+  padding: 4px 11px;
+  border: 1px solid var(--teal);
+  border-radius: 999px;
+  color: var(--teal-deep);
+  background: var(--teal-tint);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
 }
 
 .adm-list {
