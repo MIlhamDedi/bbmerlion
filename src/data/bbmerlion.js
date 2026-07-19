@@ -31,7 +31,7 @@ export const campuses = [
     short: "NUS",
     name: "National University of Singapore",
     href: "https://www.nus.edu.sg/",
-    image: "assets/bbmerlion-archive/header-1920.jpg",
+    image: "assets/campus/nus.jpg",
     text:
       "Universitas tertua dan terbesar di Singapura, langganan peringkat teratas Asia — kuat di hampir semua bidang, dari teknik sampai kedokteran.",
     highlights: ["QS Dunia 2027 · #10", "Berdiri 1905", "Kampus terbesar di Singapura"],

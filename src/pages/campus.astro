@@ -26,12 +26,62 @@ const steps = [
   }
 ];
 
-// Timeline: grid col 1 = labels; months Sep..Apr occupy cols 2..9
-const months = ["Sep", "Okt", "Nov", "Des", "Jan", "Feb", "Mar", "Apr"];
-const windows = [
-  { short: "NUS", cols: "3 / 9", label: "Okt – Mar", deadline: false },
-  { short: "NTU", cols: "3 / 7", label: "Okt – Jan", deadline: false },
-  { short: "SMU", cols: "3 / 9", label: "Okt – ±19 Mar", deadline: true }
+// Timeline: grid col 1 = labels; months Sep..Agu occupy cols 2..13.
+// Each campus row shows its full cycle: daftar -> tes/wawancara -> hasil.
+const months = ["Sep", "Okt", "Nov", "Des", "Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu"];
+const timelineRows = [
+  {
+    short: "NUS",
+    phases: [
+      { cols: "3 / 9", type: "apply", label: "Daftar (Okt–Mar)" },
+      { cols: "9 / 12", type: "result", label: "Hasil (Apr–Jun)" }
+    ]
+  },
+  {
+    short: "NTU",
+    phases: [
+      { cols: "3 / 7", type: "apply", label: "Daftar (Okt–Jan)" },
+      { cols: "7 / 10", type: "select", label: "Ujian & wawancara" },
+      { cols: "10 / 12", type: "result", label: "Hasil" }
+    ]
+  },
+  {
+    short: "SMU",
+    phases: [
+      { cols: "3 / 9", type: "apply", label: "Daftar (s.d. ±19 Mar)", deadline: true },
+      { cols: "9 / 11", type: "select", label: "Wawancara" },
+      { cols: "11 / 13", type: "result", label: "Hasil" }
+    ]
+  }
+];
+
+const scholarships = [
+  {
+    name: "MOE Tuition Grant (TG)",
+    tagline: "Subsidi biaya kuliah dari pemerintah Singapura — bukan kompetisi, hampir semua orang bisa ambil.",
+    url: "https://www.moe.gov.sg/financial-matters/tuition-grant-scheme",
+    urlLabel: "Situs resmi MOE TG",
+    rows: [
+      { label: "Siapa", value: "Semua mahasiswa internasional di NUS, NTU, dan SMU. Sifatnya opsional (opt-in), bukan seleksi." },
+      { label: "Dapat apa", value: "Potongan biaya kuliah yang besar — kasarnya 50–70% dari tarif internasional penuh." },
+      { label: "Ikatannya", value: "Wajib kerja 3 tahun di perusahaan terdaftar Singapura setelah lulus, plus 2 orang penjamin (boleh orang tua)." },
+      { label: "Cara ambil", value: "Centang opsi Tuition Grant di formulir admisi kampus. Setelah diterima, registrasi resmi lewat portal TG MOE mulai September tahun masukmu." }
+    ]
+  },
+  {
+    name: "ASEAN Undergraduate Scholarship",
+    tagline: "Beasiswa kompetitif NUS & NTU khusus warga negara ASEAN — termasuk Indonesia.",
+    url: "https://nus.edu.sg/oam/scholarships/scholarships-for-freshmen-(international-students)/asean-undergraduate-scholarship",
+    urlLabel: "Detail di NUS",
+    url2: "https://www.ntu.edu.sg/admissions/undergraduate/scholarships/scholarship-opportunities/detail/asean-undergraduate-scholarship",
+    url2Label: "Detail di NTU",
+    rows: [
+      { label: "Siapa", value: "Warga negara ASEAN dengan akademik menonjol plus rekam kegiatan dan kepemimpinan yang kuat." },
+      { label: "Dapat apa", value: "Biaya kuliah bersubsidi ditanggung penuh + tunjangan hidup S$5.800/tahun (di NUS ditambah tunjangan laptop dan akomodasi)." },
+      { label: "Ikatannya", value: "Mengikuti ikatan kerja MOE TG 3 tahun — tidak ada ikatan tambahan." },
+      { label: "Cara daftar", value: "NUS: otomatis dipertimbangkan dari aplikasi admisi; kandidat kuat diundang melengkapi form. NTU: isi 'Apply for Scholarship' di akhir aplikasi admisi + esai 300 kata + rekomendasi guru." }
+    ]
+  }
 ];
 
 const documents = [
@@ -105,28 +155,40 @@ const schema = {
           }
         </div>
 
-        <div class="tl-scroll" role="img" aria-label="Kalender pendaftaran: NUS Oktober sampai Maret, NTU Oktober sampai Januari, SMU Oktober sampai sekitar 19 Maret">
+        <div
+          class="tl-scroll"
+          role="img"
+          aria-label="Kalender aplikasi: pendaftaran Oktober sampai Maret, ujian dan wawancara sekitar Februari sampai Mei, hasil April sampai Juli, kuliah mulai Agustus"
+        >
           <div class="tl-grid">
             <span></span>
             {months.map((month) => <span class="tl-month">{month}</span>)}
             {
-              windows.map((window) => (
+              timelineRows.map((row, rowIndex) => (
                 <>
-                  <span class="tl-label">{window.short}</span>
-                  <span
-                    class={`tl-bar ${window.deadline ? "deadline" : ""}`}
-                    style={`grid-column: ${window.cols}`}
-                  >
-                    {window.label}
-                  </span>
+                  <span class="tl-label" style={`grid-row: ${rowIndex + 2}`}>{row.short}</span>
+                  {row.phases.map((phase) => (
+                    <span
+                      class={`tl-bar tl-${phase.type} ${phase.deadline ? "deadline" : ""}`}
+                      style={`grid-column: ${phase.cols}; grid-row: ${rowIndex + 2}`}
+                    >
+                      {phase.label}
+                    </span>
+                  ))}
                 </>
               ))
             }
           </div>
         </div>
+        <div class="tl-legend">
+          <span class="tl-key tl-apply">Pendaftaran</span>
+          <span class="tl-key tl-select">Ujian & wawancara</span>
+          <span class="tl-key tl-result">Pengumuman hasil</span>
+          <span class="tl-key tl-start">🎓 Kuliah mulai Agustus</span>
+        </div>
         <p class="tl-note">
-          Jendela aplikasi untuk perkuliahan mulai Agustus. Hasil seleksi umumnya keluar
-          April–Juni. <strong>●</strong> = ada deadline pasti — cek tanggal resminya tiap tahun.
+          Pola umum untuk perkuliahan mulai Agustus — tanggal pastinya berbeda tiap kampus dan
+          tiap tahun. <strong>●</strong> = ada deadline pasti; cek tanggal resminya.
         </p>
       </div>
     </section>
@@ -178,6 +240,53 @@ const schema = {
             </article>
           ))
         }
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="schol-title" style="padding-top: clamp(24px, 4vw, 40px)">
+      <div class="shell">
+        <div class="section-head">
+          <p class="eyebrow">Biaya & beasiswa</p>
+          <h2 id="schol-title">Kuliahnya bisa jauh lebih murah dari yang kamu kira.</h2>
+          <p>
+            Dua skema yang paling relevan untuk siswa Indonesia. Keduanya diurus bersamaan
+            dengan proses admisi — jadi rencanakan dari awal.
+          </p>
+        </div>
+        <div class="contact-grid">
+          {
+            scholarships.map((scholarship) => (
+              <article class="contact-panel">
+                <h2 style="font-size: 1.25rem">{scholarship.name}</h2>
+                <p>{scholarship.tagline}</p>
+                <dl class="adm-list" style="margin-top: 4px">
+                  {
+                    scholarship.rows.map((row) => (
+                      <div class="adm-row">
+                        <dt>{row.label}</dt>
+                        <dd>{row.value}</dd>
+                      </div>
+                    ))
+                  }
+                </dl>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px">
+                  <a class="btn btn-ghost btn-sm" href={scholarship.url} target="_blank" rel="noopener noreferrer">
+                    {scholarship.urlLabel} →
+                  </a>
+                  {scholarship.url2 && (
+                    <a class="btn btn-ghost btn-sm" href={scholarship.url2} target="_blank" rel="noopener noreferrer">
+                      {scholarship.url2Label} →
+                    </a>
+                  )}
+                </div>
+              </article>
+            ))
+          }
+        </div>
+        <p class="archive-note">
+          SMU tidak ikut skema ASEAN ini tapi punya beasiswa sendiri — cek menu Scholarships di
+          <a href="https://admissions.smu.edu.sg/" target="_blank" rel="noopener noreferrer">admissions.smu.edu.sg</a>.
+        </p>
       </div>
     </section>
 

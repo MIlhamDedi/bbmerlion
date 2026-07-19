@@ -139,7 +139,7 @@ const peopleSchema = {
           <div class="person-grid">
             {
               contributors.map((person) => (
-                <article class={`person-card ${person.note === "Webmaster" ? "current" : ""}`}>
+                <article class="person-card">
                   {
                     photoFor(person) ? (
                       <img class="person-avatar" src={path(photoFor(person))} alt={person.name} />
