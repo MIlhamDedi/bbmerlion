@@ -6,44 +6,131 @@ const base = import.meta.env.BASE_URL.endsWith("/")
   ? import.meta.env.BASE_URL
   : `${import.meta.env.BASE_URL}/`;
 const path = (value = "") => `${base}${String(value).replace(/^\/+/, "")}`;
+
+const steps = [
+  {
+    title: "Kunci nilai rapormu",
+    text: "Ketiga kampus menilai rapor kelas 10–12. Semakin awal kamu serius, semakin lebar pintunya."
+  },
+  {
+    title: "Latihan di Study Desk",
+    text: "Materi A-Level, kuis, dan soal tahun lalu NTU di sini disusun persis untuk ujian masuk ini."
+  },
+  {
+    title: "Daftar online",
+    text: "Jendela aplikasi umumnya Oktober–Maret, berbeda per kampus. Siapkan dokumen dari jauh hari."
+  },
+  {
+    title: "Tes, wawancara, beasiswa",
+    text: "Tes bahasa Inggris, ujian masuk atau SAT, lalu wawancara. Cek juga MOE Tuition Grant (subsidi dengan ikatan kerja 3 tahun di Singapura) dan beasiswa ASEAN."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Panduan masuk universitas Singapura untuk siswa Indonesia",
+  itemListElement: campuses.map((campus, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    item: {
+      "@type": "CollegeOrUniversity",
+      name: campus.name,
+      alternateName: campus.short,
+      url: campus.href,
+      sameAs: campus.admissionsUrl
+    }
+  }))
+};
 ---
 
 <BaseLayout
   current="campus"
-  title="Campus Guide — BBMerlion"
-  description="Kenali NUS, NTU, dan SMU — tiga universitas tujuan yang bisa kamu kejar dari Indonesia."
+  title="Cara Masuk NUS, NTU & SMU dari Indonesia — Campus Guide BBMerlion"
+  description="Panduan ujian masuk NUS, NTU, dan SMU untuk lulusan SMA Indonesia: syarat rapor, NTU Entrance Examination, SAT, tes bahasa Inggris, jadwal aplikasi, dan beasiswa."
+  schema={schema}
 >
   <main>
-    <section class="page-hero graph" aria-labelledby="campus-title">
-      <div class="shell">
+    <section class="page-hero cinematic" aria-labelledby="campus-title">
+      <div
+        class="cinematic-media"
+        style={`background-image: url(${path("assets/bbmerlion-archive/ntu-900.png")})`}
+      >
+      </div>
+      <div class="shell" style="padding-block: clamp(28px, 5vw, 56px) clamp(40px, 6vw, 64px)">
         <p class="eyebrow">Campus Guide</p>
-        <h1 id="campus-title">Kenali kampus yang kamu kejar.</h1>
+        <h1 id="campus-title">Cara masuknya, dirangkum untuk kamu.</h1>
         <p class="lede">
-          Universitas ternama di Singapura di antaranya National University of Singapore (NUS),
-          Nanyang Technological University (NTU), dan Singapore Management University (SMU).
-          Ketiganya menerima siswa Indonesia lewat jalur ujian masuk — dan itulah yang kita
-          siapkan bersama.
+          Tiga universitas ternama Singapura menerima lulusan SMA Indonesia lewat jalur ujian
+          masuk internasional. Ini rangkuman cara kerjanya — dari rapor sampai wawancara.
         </p>
       </div>
     </section>
 
-    <section class="section" aria-label="Daftar kampus">
+    <section class="section" aria-labelledby="steps-title">
       <div class="shell">
-        <div class="campus-grid">
+        <div class="section-head">
+          <p class="eyebrow">Gambaran besar</p>
+          <h2 id="steps-title">Empat langkah dari SMA ke Singapura.</h2>
+        </div>
+        <div class="steps">
           {
-            campuses.map((campus) => (
-              <a class="campus-card" href={campus.href} target="_blank" rel="noopener noreferrer">
-                <figure style={`background-image: url(${path(campus.image)})`}></figure>
-                <div class="campus-card-body">
-                  <span class="campus-tag">{campus.short}</span>
-                  <h3>{campus.name}</h3>
-                  <p>{campus.text}</p>
-                  <span class="campus-card-cta">Situs resmi kampus →</span>
-                </div>
-              </a>
+            steps.map((step, index) => (
+              <article class="step">
+                <small>Langkah {String(index + 1).padStart(2, "0")}</small>
+                <h3>{step.title}</h3>
+                <p>{step.text}</p>
+              </article>
             ))
           }
         </div>
+      </div>
+    </section>
+
+    <section class="section" aria-label="Panduan per kampus" style="padding-top: clamp(24px, 4vw, 40px)">
+      <div class="shell">
+        {
+          campuses.map((campus) => (
+            <article class="uni-guide" aria-labelledby={`uni-${campus.short}`}>
+              <div class="uni-media">
+                <figure style={`background-image: url(${path(campus.image)})`}></figure>
+                <a
+                  class="btn btn-ghost btn-sm"
+                  href={campus.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Situs resmi {campus.short} →
+                </a>
+              </div>
+              <div>
+                <div class="uni-head">
+                  <span class="campus-tag">{campus.short}</span>
+                  <h2 id={`uni-${campus.short}`}>{campus.name}</h2>
+                </div>
+                <p class="uni-intro">{campus.text}</p>
+                <dl class="adm-list">
+                  {
+                    campus.admissions.map((item) => (
+                      <div class="adm-row">
+                        <dt>{item.label}</dt>
+                        <dd>{item.value}</dd>
+                      </div>
+                    ))
+                  }
+                </dl>
+                <a
+                  class="btn btn-red uni-cta"
+                  href={campus.admissionsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Panduan admisi resmi {campus.short}
+                </a>
+              </div>
+            </article>
+          ))
+        }
       </div>
     </section>
 
@@ -60,8 +147,8 @@ const path = (value = "") => `${base}${String(value).replace(/^\/+/, "")}`;
           <a class="btn btn-red" href={path("contact/")}>Hubungi kami</a>
         </div>
         <p class="archive-note">
-          Informasi pendaftaran selalu berubah — selalu cek situs resmi kampus untuk syarat dan
-          jadwal terbaru.
+          Dirangkum Juli 2026 dari halaman admisi resmi masing-masing kampus. Syarat dan jadwal
+          bisa berubah — selalu cek tautan resmi di atas sebelum mendaftar.
         </p>
       </div>
     </section>

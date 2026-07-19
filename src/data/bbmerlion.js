@@ -33,7 +33,33 @@ export const campuses = [
     href: "https://www.nus.edu.sg/",
     image: "assets/bbmerlion-archive/header-1920.jpg",
     text:
-      "Universitas tertua dan terbesar di Singapura, langganan peringkat teratas Asia — kuat di hampir semua bidang, dari teknik sampai kedokteran."
+      "Universitas tertua dan terbesar di Singapura, langganan peringkat teratas Asia — kuat di hampir semua bidang, dari teknik sampai kedokteran.",
+    admissionsUrl:
+      "https://www.nus.edu.sg/oam/admissions/international-qualifications/admission-requirements",
+    admissions: [
+      {
+        label: "Kualifikasi",
+        value: "Ijazah SMA diterima langsung sebagai kualifikasi internasional — tidak perlu A-Level dulu."
+      },
+      {
+        label: "Nilai & rapor",
+        value:
+          "Yang dinilai: rapor kelas 11 semester 2 dan kelas 12 semester 1 (atau nilai akhir ijazah). Penilaiannya holistik, tapi rekam akademik yang kuat tetap jadi dasar."
+      },
+      {
+        label: "Tes",
+        value:
+          "Tidak ada ujian masuk umum untuk jalur Ijazah SMA; program tertentu (kedokteran, hukum, arsitektur) punya seleksi tambahan sendiri."
+      },
+      {
+        label: "Bahasa Inggris",
+        value: "Siapkan bukti kemampuan bahasa Inggris (IELTS/TOEFL) karena SMA bukan sekolah berbahasa pengantar Inggris."
+      },
+      {
+        label: "Kapan daftar",
+        value: "Aplikasi online biasanya dibuka sekitar Oktober–Maret untuk perkuliahan mulai Agustus."
+      }
+    ]
   },
   {
     short: "NTU",
@@ -41,7 +67,32 @@ export const campuses = [
     href: "https://www.ntu.edu.sg/",
     image: "assets/bbmerlion-archive/ntu-900.png",
     text:
-      "Kampus dengan program teknik dan sains yang sangat kuat. Banyak materi di Study Desk mengikuti silabus ujian masuknya."
+      "Kampus dengan program teknik dan sains yang sangat kuat. Banyak materi di Study Desk mengikuti silabus ujian masuknya.",
+    admissionsUrl:
+      "https://www.ntu.edu.sg/admissions/undergraduate/admission-guide/international-qualifications/Indonesian-SMA-UAN",
+    admissions: [
+      {
+        label: "Kualifikasi",
+        value: "Ada jalur khusus Ijazah SMA — wajib melampirkan rapor kelas 10 dan 11, lalu menunjukkan ijazah saat diterima."
+      },
+      {
+        label: "Nilai & rapor",
+        value: "Patokan kompetitif: nilai tidak kurang dari 85 di sebagian besar mata pelajaran."
+      },
+      {
+        label: "Tes",
+        value:
+          "Wajib mengikuti NTU Entrance Examination — ujian masuk matematika & sains. Materi dan soal tahun lalu di Study Desk memang disusun untuk ujian ini."
+      },
+      {
+        label: "Bahasa Inggris",
+        value: "Wajib melampirkan salah satu: IELTS, TOEFL, PTE Academic, atau SAT."
+      },
+      {
+        label: "Seleksi akhir",
+        value: "Kandidat yang lolos ujian diundang wawancara sebelum keputusan akhir."
+      }
+    ]
   },
   {
     short: "SMU",
@@ -49,7 +100,31 @@ export const campuses = [
     href: "https://www.smu.edu.sg/",
     image: "assets/bbmerlion-archive/smu-900.png",
     text:
-      "Universitas di jantung kota Singapura dengan fokus bisnis, manajemen, ekonomi, dan sistem informasi."
+      "Universitas di jantung kota Singapura dengan fokus bisnis, manajemen, ekonomi, dan sistem informasi.",
+    admissionsUrl:
+      "https://admissions.smu.edu.sg/admissions-requirements/international-and-other-qualifications",
+    admissions: [
+      {
+        label: "Kualifikasi",
+        value: "Ijazah SMA diterima, tapi harus didampingi tes standar internasional."
+      },
+      {
+        label: "Tes",
+        value: "SAT (patokan kompetitif ±1350) atau ACT (±29) menjadi dasar aplikasi bersama rapor dan ijazah."
+      },
+      {
+        label: "Bahasa Inggris",
+        value: "IELTS, TOEFL, C1 Advanced, atau PTE Academic diterima — skor SAT yang baik bisa sekaligus memenuhinya."
+      },
+      {
+        label: "Seleksi akhir",
+        value: "Proses seleksi termasuk wawancara untuk kandidat terpilih."
+      },
+      {
+        label: "Kapan daftar",
+        value: "Deadline aplikasi sekitar pertengahan Maret (contoh AY2026: 19 Maret)."
+      }
+    ]
   }
 ];
 
@@ -88,7 +163,7 @@ export const contributors = [
   { name: "Naufal" },
   { name: "Karin" },
   {
-    name: "Ilham Dedi",
+    name: "Dedi",
     photo: "assets/bbmerlion-archive/crew/ilham-dedi.jpg",
     note: "Webmaster"
   }

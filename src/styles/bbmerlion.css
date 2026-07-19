@@ -449,6 +449,58 @@ h3 {
 }
 
 /* --------------------------------------------------------------------------
+   Cinematic photo heroes
+   -------------------------------------------------------------------------- */
+
+.cinematic {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  color: #fff;
+  background: var(--dark);
+}
+
+.cinematic-media {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-position: center 40%;
+  background-size: cover;
+  transform: scale(1.03);
+}
+
+.cinematic-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(16, 27, 42, 0.92), rgba(16, 27, 42, 0.62) 55%, rgba(16, 27, 42, 0.3)),
+    linear-gradient(0deg, rgba(16, 27, 42, 0.55), transparent 45%);
+}
+
+.cinematic h1 {
+  color: #fff;
+}
+
+.cinematic .eyebrow {
+  color: var(--teal-tint);
+}
+
+.cinematic .lede {
+  color: #d7e4e6;
+}
+
+.cinematic .btn-ghost {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.cinematic .btn-ghost:hover,
+.cinematic .btn-ghost:focus-visible {
+  border-color: #fff;
+}
+
+/* --------------------------------------------------------------------------
    Home — hero
    -------------------------------------------------------------------------- */
 
@@ -1155,6 +1207,144 @@ h3 {
   color: #a9bdc3;
   font-family: var(--font-mono);
   font-size: 0.8rem;
+}
+
+/* --------------------------------------------------------------------------
+   Campus — admissions guide
+   -------------------------------------------------------------------------- */
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.step {
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--card);
+}
+
+.step small {
+  display: block;
+  margin-bottom: 12px;
+  color: var(--red);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+}
+
+.step h3 {
+  font-size: 1.05rem;
+}
+
+.step p {
+  margin: 8px 0 0;
+  color: var(--ink-2);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.uni-guide {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.65fr) minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 48px);
+  align-items: start;
+  margin-top: clamp(36px, 5vw, 56px);
+  padding-top: clamp(36px, 5vw, 56px);
+  border-top: 2px solid var(--ink);
+}
+
+.uni-media {
+  position: sticky;
+  top: calc(var(--topbar-h) + 20px);
+  display: grid;
+  gap: 14px;
+}
+
+.uni-media figure {
+  margin: 0;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius);
+  background-position: center;
+  background-size: cover;
+}
+
+.uni-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.uni-head h2 {
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+}
+
+.uni-intro {
+  margin: 12px 0 0;
+  color: var(--ink-2);
+}
+
+.adm-list {
+  margin-top: 22px;
+  display: grid;
+}
+
+.adm-row {
+  display: grid;
+  grid-template-columns: minmax(120px, 160px) minmax(0, 1fr);
+  gap: 8px 20px;
+  padding: 13px 2px;
+  border-bottom: 1px dashed var(--line-dash);
+}
+
+.adm-row dt {
+  color: var(--teal-deep);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding-top: 3px;
+}
+
+.adm-row dd {
+  margin: 0;
+  color: var(--ink);
+  font-size: 0.97rem;
+  line-height: 1.65;
+}
+
+.uni-cta {
+  margin-top: 20px;
+}
+
+@media (max-width: 900px) {
+  .steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .uni-guide {
+    grid-template-columns: 1fr;
+  }
+
+  .uni-media {
+    position: static;
+  }
+}
+
+@media (max-width: 640px) {
+  .steps {
+    grid-template-columns: 1fr;
+  }
+
+  .adm-row {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
 }
 
 /* --------------------------------------------------------------------------

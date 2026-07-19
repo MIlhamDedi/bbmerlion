@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bbmerlion.milhamdedi.com/sitemap-index.xml

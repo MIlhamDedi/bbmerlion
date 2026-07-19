@@ -11,13 +11,46 @@ import { contact } from "../data/bbmerlion.js";
 const {
   title = "BBMerlion — Ya, kamu bisa!",
   description = "Persiapan gratis ujian masuk NUS, NTU, dan SMU untuk siswa Indonesia — materi A-Level, kuis, dan tryout yang disusun kakak-kakak di Singapura.",
-  current = "home"
+  current = "home",
+  image = "assets/bbmerlion-archive/header-1920.jpg",
+  schema = null
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL.endsWith("/")
   ? import.meta.env.BASE_URL
   : `${import.meta.env.BASE_URL}/`;
 const path = (value = "") => `${base}${String(value).replace(/^\/+/, "")}`;
+
+const site = Astro.site ?? new URL("https://bbmerlion.milhamdedi.com");
+const canonical = new URL(Astro.url.pathname, site);
+const ogImage = new URL(path(image), site);
+
+const orgSchema = {
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  "@id": new URL(base, site).href + "#org",
+  name: "BBMerlion",
+  alternateName: "Bimbingan Belajar Merlion",
+  slogan: "Ya, kamu bisa!",
+  description:
+    "Bimbingan belajar sukarela dari mahasiswa Indonesia di Singapura untuk siswa SMA yang menyiapkan ujian masuk NUS, NTU, dan SMU.",
+  url: site.href,
+  logo: new URL(path("assets/images/logo.png"), site).href,
+  email: contact.primaryEmail,
+  sameAs: [contact.twitter, contact.facebookGroup],
+  parentOrganization: { "@type": "Organization", name: "Smandel Singapore Society" }
+};
+
+const siteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "BBMerlion",
+  url: site.href,
+  inLanguage: "id-ID",
+  publisher: { "@id": orgSchema["@id"] }
+};
+
+const schemas = [orgSchema, siteSchema, ...(schema ? [schema] : [])];
 
 const nav = [
   { key: "home", label: "Home", href: "" },
@@ -35,7 +68,24 @@ const nav = [
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="description" content={description} />
     <link rel="icon" href={path("favicon.png")} />
+    <link rel="canonical" href={canonical.href} />
+    <link rel="sitemap" href={path("sitemap-index.xml")} />
     <title>{title}</title>
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="BBMerlion" />
+    <meta property="og:locale" content="id_ID" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical.href} />
+    <meta property="og:image" content={ogImage.href} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@BBMerlion" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage.href} />
+
+    {schemas.map((entry) => <script type="application/ld+json" set:html={JSON.stringify(entry)} />)}
   </head>
   <body>
     <header class="topbar">

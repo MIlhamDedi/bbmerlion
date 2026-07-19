@@ -25,16 +25,49 @@ const photoFor = (person) => {
   const file = `${person.name.toLowerCase().replace(/\s+/g, "-")}.jpg`;
   return existsSync(join(crewPhotoDir, file)) ? `assets/bbmerlion-archive/crew/${file}` : null;
 };
+
+const site = Astro.site ?? new URL("https://bbmerlion.milhamdedi.com");
+const person = (entry, role) => {
+  const photo = photoFor(entry);
+  return {
+    "@type": "Person",
+    name: entry.name,
+    jobTitle: entry.note || role,
+    ...(photo ? { image: new URL(path(photo), site).href } : {})
+  };
+};
+
+const peopleSchema = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  name: "Tentang BBMerlion",
+  inLanguage: "id-ID",
+  mainEntity: {
+    "@type": "EducationalOrganization",
+    name: "BBMerlion",
+    member: [
+      ...crew.map((entry) => person(entry, "Kru awal")),
+      ...contributors.map((entry) => person(entry, "Kontributor"))
+    ]
+  }
+};
 ---
 
 <BaseLayout
   current="about"
   title="Tentang Kami — BBMerlion"
   description="BBMerlion adalah inisiatif sukarela mahasiswa Indonesia di Singapura untuk membimbing adik-adik SMA menuju NUS, NTU, dan SMU."
+  image="assets/bbmerlion-archive/home.jpg"
+  schema={peopleSchema}
 >
   <main>
-    <section class="page-hero graph" aria-labelledby="about-title">
-      <div class="shell">
+    <section class="page-hero cinematic" aria-labelledby="about-title">
+      <div
+        class="cinematic-media"
+        style={`background-image: url(${path("assets/bbmerlion-archive/home.jpg")})`}
+      >
+      </div>
+      <div class="shell" style="padding-block: clamp(28px, 5vw, 56px) clamp(40px, 6vw, 64px)">
         <p class="eyebrow">This is our story</p>
         <h1 id="about-title">Dari kakak di Singapura, untuk adik di Indonesia.</h1>
         <p class="lede">
@@ -101,7 +134,7 @@ const photoFor = (person) => {
           <div class="person-grid">
             {
               contributors.map((person) => (
-                <article class={`person-card ${person.name === "Ilham Dedi" ? "current" : ""}`}>
+                <article class={`person-card ${person.note === "Webmaster" ? "current" : ""}`}>
                   {
                     photoFor(person) ? (
                       <img class="person-avatar" src={path(photoFor(person))} alt={person.name} />

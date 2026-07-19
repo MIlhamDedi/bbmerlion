@@ -9,9 +9,17 @@ const base = import.meta.env.BASE_URL.endsWith("/")
 const path = (value = "") => `${base}${String(value).replace(/^\/+/, "")}`;
 ---
 
-<BaseLayout current="home">
+<BaseLayout
+  current="home"
+  title="BBMerlion — Bimbel Gratis Ujian Masuk NUS, NTU & SMU"
+>
   <main>
-    <section class="hero graph" aria-labelledby="hero-title">
+    <section class="hero cinematic" aria-labelledby="hero-title">
+      <div
+        class="cinematic-media"
+        style={`background-image: url(${path("assets/bbmerlion-archive/header-1920.jpg")})`}
+      >
+      </div>
       <div class="shell hero-inner">
         <p class="eyebrow">Bimbingan Belajar Merlion — gratis, dari kakak untuk adik</p>
         <h1 id="hero-title">

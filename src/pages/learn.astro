@@ -6,16 +6,36 @@ const base = import.meta.env.BASE_URL.endsWith("/")
   ? import.meta.env.BASE_URL
   : `${import.meta.env.BASE_URL}/`;
 const pdf = (value) => encodeURI(`${base}pdf/${value}`);
+const pdfHeroImage = `${base}assets/bbmerlion-archive/studydesk-1400.jpg`;
 ---
 
 <BaseLayout
   current="learn"
-  title="Study Desk — BBMerlion"
-  description="Belajar seperti di kelas: materi A-Level, kuis, tryout, dan soal tahun lalu NTU dengan progres belajarmu tersimpan."
+  title="Study Desk — Materi, Kuis & Soal Ujian Masuk NUS/NTU/SMU — BBMerlion"
+  description="Belajar seperti di kelas: materi A-Level matematika & fisika, kuis, tryout, dan soal tahun lalu NTU — gratis, dengan progres belajarmu tersimpan."
+  image="assets/bbmerlion-archive/studydesk-1400.jpg"
+  schema={{
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Study Desk BBMerlion",
+    description:
+      "Kumpulan materi A-Level, kuis, tryout, dan soal ujian masuk untuk persiapan NUS, NTU, dan SMU.",
+    inLanguage: "id-ID",
+    mainEntity: {
+      "@type": "ItemList",
+      name: "Materi PDF BBMerlion",
+      numberOfItems: resources.length
+    }
+  }}
 >
   <main>
-    <section class="page-hero graph" aria-labelledby="learn-title">
-      <div class="shell">
+    <section class="page-hero cinematic" aria-labelledby="learn-title">
+      <div
+        class="cinematic-media"
+        style={`background-image: url(${pdfHeroImage})`}
+      >
+      </div>
+      <div class="shell" style="padding-block: clamp(28px, 5vw, 56px) clamp(40px, 6vw, 64px)">
         <p class="eyebrow">Study Desk</p>
         <h1 id="learn-title">Semua materi, satu meja belajar.</h1>
         <p class="lede">
