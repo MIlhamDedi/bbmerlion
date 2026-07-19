@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { archiveSources, campuses } from "../data/bbmerlion.js";
+import { campuses } from "../data/bbmerlion.js";
 
 const base = import.meta.env.BASE_URL.endsWith("/")
   ? import.meta.env.BASE_URL
@@ -37,7 +37,7 @@ const path = (value = "") => `${base}${String(value).replace(/^\/+/, "")}`;
                 <div class="campus-card-body">
                   <span class="campus-tag">{campus.short}</span>
                   <h3>{campus.name}</h3>
-                  <p>{campus.archiveText}</p>
+                  <p>{campus.text}</p>
                   <span class="campus-card-cta">Situs resmi kampus →</span>
                 </div>
               </a>
@@ -51,17 +51,17 @@ const path = (value = "") => `${base}${String(value).replace(/^\/+/, "")}`;
       <div class="shell">
         <div class="cta-panel">
           <div>
-            <h2 id="campus-ask-title">Jangan takut untuk bertanya langsung.</h2>
+            <h2 id="campus-ask-title">Jangan takut untuk bertanya.</h2>
             <p>
-              Bingung soal jurusan, biaya, atau kehidupan di Singapura? Kakak-kakak BBMerlion
-              pernah ada di posisimu. Tanyakan saja.
+              Bingung soal jurusan, biaya, atau kehidupan di Singapura? Kirim pertanyaanmu lewat
+              email — kami bantu sebisanya.
             </p>
           </div>
           <a class="btn btn-red" href={path("contact/")}>Hubungi kami</a>
         </div>
         <p class="archive-note">
-          Informasi pendaftaran selalu berubah — cek situs resmi kampus untuk syarat terbaru.
-          <a href={archiveSources.campus} target="_blank" rel="noopener noreferrer">Lihat halaman arsip 2018 →</a>
+          Informasi pendaftaran selalu berubah — selalu cek situs resmi kampus untuk syarat dan
+          jadwal terbaru.
         </p>
       </div>
     </section>

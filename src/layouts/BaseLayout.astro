@@ -6,9 +6,11 @@ import "@fontsource/ibm-plex-mono/500.css";
 import "@fontsource/ibm-plex-mono/600.css";
 import "../styles/bbmerlion.css";
 
+import { contact } from "../data/bbmerlion.js";
+
 const {
   title = "BBMerlion — Ya, kamu bisa!",
-  description = "Bimbingan belajar gratis untuk siswa Indonesia yang ingin kuliah di NUS, NTU, dan SMU — materi, kuis, dan kakak pembimbing dari Singapura.",
+  description = "Persiapan gratis ujian masuk NUS, NTU, dan SMU untuk siswa Indonesia — materi A-Level, kuis, dan tryout yang disusun kakak-kakak di Singapura.",
   current = "home"
 } = Astro.props;
 
@@ -66,9 +68,8 @@ const nav = [
             <strong>BB<span>Merlion</span></strong>
           </a>
           <p class="footer-tagline">
-            Bimbingan belajar sukarela dari mahasiswa Indonesia di Singapura, untuk siswa SMA
-            yang ingin menempuh ujian masuk universitas di Singapura. Gratis, dari kakak untuk
-            adik.
+            Materi persiapan gratis dari mahasiswa Indonesia di Singapura, untuk siswa SMA yang
+            ingin menempuh ujian masuk universitas di Singapura. Gratis, dari kakak untuk adik.
           </p>
         </div>
         <div class="footer-col">
@@ -78,23 +79,22 @@ const nav = [
           </ul>
         </div>
         <div class="footer-col">
-          <h3>Arsip</h3>
+          <h3>Kontak</h3>
           <ul>
+            <li><a href={`mailto:${contact.primaryEmail}`}>{contact.primaryEmail}</a></li>
             <li>
-              <a
-                href="https://web.archive.org/web/20180804225244/http://bbmerlion.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Situs asli (Wayback, 2018)
+              <a href={contact.twitter} target="_blank" rel="noopener noreferrer">Twitter</a>
+            </li>
+            <li>
+              <a href={contact.facebookGroup} target="_blank" rel="noopener noreferrer">
+                Facebook Group
               </a>
             </li>
-            <li><a href="mailto:contact.bbmerlion@gmail.com">contact.bbmerlion@gmail.com</a></li>
           </ul>
         </div>
       </div>
       <div class="shell footer-base">
-        <span>BBMerlion — dibangun ulang dari arsip 2018</span>
+        <span>BBMerlion — presented by Smandel Singapore Society</span>
         <span>Ya, kamu bisa!</span>
       </div>
     </footer>

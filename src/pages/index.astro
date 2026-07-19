@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { archiveSources, campuses, pillars, quotes } from "../data/bbmerlion.js";
+import { campuses, pillars, quotes } from "../data/bbmerlion.js";
 import { resources } from "../lib/pdfs.js";
 
 const base = import.meta.env.BASE_URL.endsWith("/")
@@ -20,7 +20,7 @@ const path = (value = "") => `${base}${String(value).replace(/^\/+/, "")}`;
         <p class="lede">
           Kuliah di universitas terbaik Asia itu cuma 1,5 jam penerbangan dari rumah. BBMerlion
           membantu kamu menyiapkan ujian masuk NUS, NTU, dan SMU — dengan materi A-Level, kuis,
-          dan kakak pembimbing yang sedang kuliah di Singapura.
+          dan tryout yang disusun kakak-kakak yang kuliah di Singapura.
         </p>
         <div class="hero-actions">
           <a class="btn btn-red" href={path("learn/")}>Buka Study Desk</a>
@@ -44,7 +44,7 @@ const path = (value = "") => `${base}${String(value).replace(/^\/+/, "")}`;
           <dd>Rp 0 <small>sukarela</small></dd>
         </div>
         <div>
-          <dt>Pembimbing</dt>
+          <dt>Penyusun</dt>
           <dd><small style="font-size:1.05rem">Mahasiswa di Singapura</small></dd>
         </div>
       </dl>
@@ -118,10 +118,6 @@ const path = (value = "") => `${base}${String(value).replace(/^\/+/, "")}`;
           </div>
           <a class="btn btn-red" href={path("learn/")}>Buka Study Desk</a>
         </div>
-        <p class="archive-note">
-          Situs ini dibangun ulang dari arsip BBMerlion 2018.
-          <a href={archiveSources.home} target="_blank" rel="noopener noreferrer">Lihat tangkapan Wayback →</a>
-        </p>
       </div>
     </section>
   </main>
