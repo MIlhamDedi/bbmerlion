@@ -1,0 +1,102 @@
+---
+import "@fontsource-variable/bricolage-grotesque";
+import "@fontsource-variable/instrument-sans";
+import "@fontsource/ibm-plex-mono/400.css";
+import "@fontsource/ibm-plex-mono/500.css";
+import "@fontsource/ibm-plex-mono/600.css";
+import "../styles/bbmerlion.css";
+
+const {
+  title = "BBMerlion — Ya, kamu bisa!",
+  description = "Bimbingan belajar gratis untuk siswa Indonesia yang ingin kuliah di NUS, NTU, dan SMU — materi, kuis, dan kakak pembimbing dari Singapura.",
+  current = "home"
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+const path = (value = "") => `${base}${String(value).replace(/^\/+/, "")}`;
+
+const nav = [
+  { key: "home", label: "Home", href: "" },
+  { key: "learn", label: "Study Desk", href: "learn/" },
+  { key: "campus", label: "Campus", href: "campus/" },
+  { key: "about", label: "About", href: "about/" },
+  { key: "contact", label: "Contact", href: "contact/" }
+];
+---
+
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content={description} />
+    <link rel="icon" href={path("favicon.png")} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="shell topbar-inner">
+        <a class="brand" href={path("")} aria-label="BBMerlion home">
+          <img src={path("assets/images/logo.png")} alt="" />
+          <strong>BB<span>Merlion</span></strong>
+        </a>
+        <nav class="nav" aria-label="Navigasi utama">
+          {
+            nav.map((item) => (
+              <a
+                class={current === item.key ? "is-active" : ""}
+                href={path(item.href)}
+                aria-current={current === item.key ? "page" : undefined}
+              >
+                {item.label}
+              </a>
+            ))
+          }
+        </nav>
+      </div>
+    </header>
+    <slot />
+    <footer class="footer">
+      <div class="shell footer-inner">
+        <div>
+          <a class="brand" href={path("")}>
+            <img src={path("assets/images/logo.png")} alt="" />
+            <strong>BB<span>Merlion</span></strong>
+          </a>
+          <p class="footer-tagline">
+            Bimbingan belajar sukarela dari mahasiswa Indonesia di Singapura, untuk siswa SMA
+            yang ingin menempuh ujian masuk universitas di Singapura. Gratis, dari kakak untuk
+            adik.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h3>Halaman</h3>
+          <ul>
+            {nav.map((item) => <li><a href={path(item.href)}>{item.label}</a></li>)}
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Arsip</h3>
+          <ul>
+            <li>
+              <a
+                href="https://web.archive.org/web/20180804225244/http://bbmerlion.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Situs asli (Wayback, 2018)
+              </a>
+            </li>
+            <li><a href="mailto:contact.bbmerlion@gmail.com">contact.bbmerlion@gmail.com</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="shell footer-base">
+        <span>BBMerlion — dibangun ulang dari arsip 2018</span>
+        <span>Ya, kamu bisa!</span>
+      </div>
+    </footer>
+  </body>
+</html>

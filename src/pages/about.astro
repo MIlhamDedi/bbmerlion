@@ -1,0 +1,133 @@
+---
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+import { fileURLToPath } from "node:url";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { archiveSources, contributors, crew, quotes, storyParagraphs } from "../data/bbmerlion.js";
+
+const base = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+const path = (value = "") => `${base}${String(value).replace(/^\/+/, "")}`;
+const initials = (name) =>
+  name
+    .split(" ")
+    .map((part) => part[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+
+// Portraits recovered into public/assets/bbmerlion-archive/crew/<name>.jpg are
+// picked up automatically at build time; missing ones fall back to initials.
+const crewPhotoDir = fileURLToPath(new URL("../../public/assets/bbmerlion-archive/crew/", import.meta.url));
+const photoFor = (person) => {
+  if (person.photo) return person.photo;
+  const file = `${person.name.toLowerCase().replace(/\s+/g, "-")}.jpg`;
+  return existsSync(join(crewPhotoDir, file)) ? `assets/bbmerlion-archive/crew/${file}` : null;
+};
+---
+
+<BaseLayout
+  current="about"
+  title="Tentang Kami — BBMerlion"
+  description="BBMerlion adalah inisiatif sukarela mahasiswa Indonesia di Singapura untuk membimbing adik-adik SMA menuju NUS, NTU, dan SMU."
+>
+  <main>
+    <section class="page-hero graph" aria-labelledby="about-title">
+      <div class="shell">
+        <p class="eyebrow">This is our story</p>
+        <h1 id="about-title">Dari kakak di Singapura, untuk adik di Indonesia.</h1>
+        <p class="lede">
+          BBMerlion lahir dari satu keyakinan sederhana: pendidikan terbaik di Asia seharusnya
+          bisa dijangkau talenta Indonesia.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="story-title">
+      <div class="shell story-grid">
+        <div class="story-copy">
+          <h2 id="story-title" class="sr-only">Cerita BBMerlion</h2>
+          {storyParagraphs.map((paragraph) => <p>{paragraph}</p>)}
+          <div class="pull-quote">“{quotes[0]}”</div>
+        </div>
+        <aside class="story-aside">
+          <img
+            src={path("assets/bbmerlion-archive/index-bottom.png")}
+            alt="Ilustrasi arsip BBMerlion"
+          />
+          <strong>Salam, Pengurus BBMerlion</strong>
+          <span>“{quotes[2]}”</span>
+        </aside>
+      </div>
+    </section>
+
+    <section class="people-section" aria-labelledby="people-title">
+      <div class="shell">
+        <div class="section-head">
+          <p class="eyebrow">People behind BBMerlion</p>
+          <h2 id="people-title">Kru dan kontributor.</h2>
+          <p>
+            Nama dan kutipan aslinya dipulihkan dari halaman About 2018. Foto-foto lama belum
+            berhasil diselamatkan dari arsip, jadi untuk sementara diwakili inisial.
+          </p>
+        </div>
+
+        <div class="people-block">
+          <h3>Kru awal</h3>
+          <div class="person-grid">
+            {
+              crew.map((person) => (
+                <article class="person-card">
+                  {
+                    photoFor(person) ? (
+                      <img class="person-avatar" src={path(photoFor(person))} alt={person.name} />
+                    ) : (
+                      <div class="person-avatar placeholder" aria-hidden="true">{initials(person.name)}</div>
+                    )
+                  }
+                  <div>
+                    <strong>{person.name}</strong>
+                    <p>“{person.quote}”</p>
+                  </div>
+                </article>
+              ))
+            }
+          </div>
+        </div>
+
+        <div class="people-block">
+          <h3>Kontributor</h3>
+          <div class="person-grid">
+            {
+              contributors.map((person) => (
+                <article class={`person-card ${person.name === "Ilham Dedi" ? "current" : ""}`}>
+                  {
+                    photoFor(person) ? (
+                      <img class="person-avatar" src={path(photoFor(person))} alt={person.name} />
+                    ) : (
+                      <div class="person-avatar placeholder" aria-hidden="true">{initials(person.name)}</div>
+                    )
+                  }
+                  <div>
+                    <strong>{person.name}</strong>
+                    <p>{person.note || "Kontributor arsip"}</p>
+                  </div>
+                </article>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-label="Sumber arsip">
+      <div class="shell">
+        <p class="archive-note">
+          Cerita dan daftar nama di halaman ini berasal dari arsip 2018.
+          <a href={archiveSources.about} target="_blank" rel="noopener noreferrer">Lihat halaman About asli →</a>
+        </p>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

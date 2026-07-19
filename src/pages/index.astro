@@ -1,0 +1,128 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { archiveSources, campuses, pillars, quotes } from "../data/bbmerlion.js";
+import { resources } from "../lib/pdfs.js";
+
+const base = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+const path = (value = "") => `${base}${String(value).replace(/^\/+/, "")}`;
+---
+
+<BaseLayout current="home">
+  <main>
+    <section class="hero graph" aria-labelledby="hero-title">
+      <div class="shell hero-inner">
+        <p class="eyebrow">Bimbingan Belajar Merlion — gratis, dari kakak untuk adik</p>
+        <h1 id="hero-title">
+          Ya, kamu <span class="pen">bisa!<svg viewBox="0 0 200 20" aria-hidden="true"><path d="M4 14 C 52 6, 128 4, 196 10" /></svg></span>
+        </h1>
+        <p class="lede">
+          Kuliah di universitas terbaik Asia itu cuma 1,5 jam penerbangan dari rumah. BBMerlion
+          membantu kamu menyiapkan ujian masuk NUS, NTU, dan SMU — dengan materi A-Level, kuis,
+          dan kakak pembimbing yang sedang kuliah di Singapura.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-red" href={path("learn/")}>Buka Study Desk</a>
+          <a class="btn btn-ghost" href={path("about/")}>Kenalan dengan kakak-kakak</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="shell">
+      <dl class="worksheet-strip">
+        <div>
+          <dt>Materi PDF</dt>
+          <dd>{resources.length}</dd>
+        </div>
+        <div>
+          <dt>Kampus tujuan</dt>
+          <dd>3 <small>NUS · NTU · SMU</small></dd>
+        </div>
+        <div>
+          <dt>Biaya</dt>
+          <dd>Rp 0 <small>sukarela</small></dd>
+        </div>
+        <div>
+          <dt>Pembimbing</dt>
+          <dd><small style="font-size:1.05rem">Mahasiswa di Singapura</small></dd>
+        </div>
+      </dl>
+    </div>
+
+    <section class="section" aria-labelledby="pillars-title">
+      <div class="shell">
+        <div class="section-head">
+          <p class="eyebrow">Apa yang kamu dapat</p>
+          <h2 id="pillars-title">Tiga hal yang menemani belajarmu.</h2>
+        </div>
+        <div class="feature-grid">
+          {
+            pillars.map((pillar) => (
+              <article class="feature-card">
+                <img src={path(pillar.image)} alt="" />
+                <h3>{pillar.title}</h3>
+                <p>{pillar.text}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="campus-title">
+      <div class="shell">
+        <div class="section-head">
+          <p class="eyebrow">Kampus tujuan</p>
+          <h2 id="campus-title">Tiga universitas, satu tujuan: kamu diterima.</h2>
+          <p>
+            Materi di Study Desk disusun mengikuti kurikulum ujian masuk universitas ternama di
+            Singapura.
+          </p>
+        </div>
+        <div class="campus-grid">
+          {
+            campuses.map((campus) => (
+              <a class="campus-card" href={path("campus/")}>
+                <figure style={`background-image: url(${path(campus.image)})`}></figure>
+                <div class="campus-card-body">
+                  <span class="campus-tag">{campus.short}</span>
+                  <h3>{campus.name}</h3>
+                  <span class="campus-card-cta">Lihat panduan kampus →</span>
+                </div>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="quote-band" aria-label="Pesan dari pengurus">
+      <div class="shell quote-band-inner">
+        <figure style="margin:0">
+          <blockquote>“{quotes[0]}”</blockquote>
+          <figcaption>— Pengurus BBMerlion</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="cta-title">
+      <div class="shell">
+        <div class="cta-panel">
+          <div>
+            <h2 id="cta-title">Mulai dari mana? Buka Study Desk.</h2>
+            <p>
+              Semua {resources.length} materi bisa dibaca langsung di browser — catatan, kuis
+              beserta pembahasannya, sampai soal tahun lalu NTU.
+            </p>
+          </div>
+          <a class="btn btn-red" href={path("learn/")}>Buka Study Desk</a>
+        </div>
+        <p class="archive-note">
+          Situs ini dibangun ulang dari arsip BBMerlion 2018.
+          <a href={archiveSources.home} target="_blank" rel="noopener noreferrer">Lihat tangkapan Wayback →</a>
+        </p>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

@@ -1,0 +1,509 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { collections, resources, tracks } from "../lib/pdfs.js";
+
+const base = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+const pdf = (value) => encodeURI(`${base}pdf/${value}`);
+---
+
+<BaseLayout
+  current="learn"
+  title="Study Desk — BBMerlion"
+  description="Belajar seperti di kelas: materi A-Level, kuis, tryout, dan soal tahun lalu NTU dengan progres belajarmu tersimpan."
+>
+  <main>
+    <section class="page-hero graph" aria-labelledby="learn-title">
+      <div class="shell">
+        <p class="eyebrow">Study Desk</p>
+        <h1 id="learn-title">Semua materi, satu meja belajar.</h1>
+        <p class="lede">
+          {resources.length} materi tersusun per koleksi, seperti modul kelas. Tandai yang sudah
+          selesai — progresmu tersimpan di browser ini, jadi kamu selalu tahu harus lanjut dari
+          mana.
+        </p>
+      </div>
+    </section>
+
+    <div class="shell desk-layout">
+      <aside class="desk-side" aria-label="Navigasi koleksi dan progres">
+        <div class="progress-card">
+          <h2>Progresmu</h2>
+          <strong><span data-progress-percent>0</span>%</strong>
+          <div class="bar"><span data-progress-bar></span></div>
+          <small><span data-progress-done>0</span> dari {resources.length} materi selesai</small>
+        </div>
+        <nav class="side-nav" aria-label="Koleksi">
+          {
+            tracks.map((track) => {
+              const groupItems =
+                track.key === "all"
+                  ? resources
+                  : resources.filter((item) => item.track === track.key);
+              return (
+                <button
+                  class="side-item"
+                  type="button"
+                  data-filter-track={track.key}
+                  aria-pressed={track.key === "all" ? "true" : "false"}
+                >
+                  <span class="side-item-row">
+                    <strong>{track.label}</strong>
+                    <span data-side-count={track.key}>0/{groupItems.length}</span>
+                  </span>
+                  <span class="bar"><span data-side-bar={track.key}></span></span>
+                </button>
+              );
+            })
+          }
+        </nav>
+      </aside>
+
+      <div class="desk-main">
+        <div class="continue-card" data-continue hidden>
+          <div>
+            <p class="eyebrow">Lanjutkan belajar</p>
+            <strong data-continue-title></strong>
+          </div>
+          <button class="btn btn-red btn-sm" type="button" data-continue-open>Lanjutkan</button>
+        </div>
+
+        <div class="desk-main-head">
+          <label style="display:contents">
+            <span class="sr-only">Cari materi</span>
+            <input
+              class="search"
+              type="search"
+              placeholder="Cari materi… misal: vektor, kinematics, tryout"
+              data-resource-search
+            />
+          </label>
+          <p class="desk-count" data-count aria-live="polite">
+            {resources.length} dari {resources.length} materi
+          </p>
+        </div>
+
+        {
+          collections.map((group) => (
+            <section class="resource-group" data-group data-track={group.track}>
+              <div class="resource-group-head">
+                <h2>{group.name}</h2>
+                <span>{group.items.length} materi</span>
+              </div>
+              {group.items.map((resource) => (
+                <article
+                  class="resource-row"
+                  data-resource
+                  data-track={resource.track}
+                  data-file={resource.file}
+                  data-search={`${resource.title} ${resource.collection} ${resource.subject} ${resource.file}`.toLowerCase()}
+                >
+                  <button
+                    class="check"
+                    type="button"
+                    data-check
+                    aria-pressed="false"
+                    aria-label={`Tandai "${resource.title}" selesai`}
+                  >
+                    ✓
+                  </button>
+                  <div>
+                    <h3 class="resource-row-title">{resource.title}</h3>
+                    <p class="resource-row-meta">{resource.subject} · {resource.file}</p>
+                  </div>
+                  <div class="resource-row-actions">
+                    <button
+                      class="btn btn-read btn-sm"
+                      type="button"
+                      data-open-viewer
+                      data-src={pdf(resource.file)}
+                      data-title={resource.title}
+                    >
+                      Baca
+                    </button>
+                    <a class="btn btn-ghost btn-sm" href={pdf(resource.file)} download>
+                      Unduh
+                    </a>
+                  </div>
+                </article>
+              ))}
+            </section>
+          ))
+        }
+
+        <div class="empty-state" data-empty-state>
+          <strong>Tidak ada materi yang cocok.</strong>
+          Coba kata kunci lain, atau pilih "Semua".
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <dialog class="viewer" data-viewer aria-labelledby="viewer-title">
+    <div class="viewer-inner">
+      <div class="viewer-bar">
+        <h2 class="viewer-title" id="viewer-title" data-viewer-title>Dokumen</h2>
+        <div class="viewer-controls">
+          <button class="viewer-btn" type="button" data-page-prev aria-label="Halaman sebelumnya">‹</button>
+          <span class="viewer-page-indicator" data-page-indicator>– / –</span>
+          <button class="viewer-btn" type="button" data-page-next aria-label="Halaman berikutnya">›</button>
+        </div>
+        <div class="viewer-controls">
+          <button class="viewer-btn" type="button" data-zoom-out aria-label="Perkecil">−</button>
+          <button class="viewer-btn" type="button" data-zoom-in aria-label="Perbesar">+</button>
+        </div>
+        <div class="viewer-controls">
+          <a class="viewer-btn" data-viewer-download href="#" download aria-label="Unduh PDF">↓</a>
+          <button class="viewer-btn" type="button" data-viewer-close aria-label="Tutup">✕</button>
+        </div>
+      </div>
+      <div class="viewer-stage" data-viewer-stage>
+        <p class="viewer-status" data-viewer-status>Memuat dokumen…</p>
+        <canvas data-viewer-canvas hidden></canvas>
+      </div>
+      <div class="viewer-footer">
+        <button class="viewer-btn" type="button" data-lesson-prev>‹ Materi sebelumnya</button>
+        <button class="viewer-btn viewer-done" type="button" data-lesson-done aria-pressed="false">
+          Tandai selesai ✓
+        </button>
+        <button class="viewer-btn" type="button" data-lesson-next>Materi berikutnya ›</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script>
+    import * as pdfjsLib from "pdfjs-dist";
+    import workerUrl from "pdfjs-dist/build/pdf.worker.min.mjs?url";
+
+    pdfjsLib.GlobalWorkerOptions.workerSrc = workerUrl;
+
+    /* ---------------- progress store ---------------- */
+    const STORE_KEY = "bbmerlion-desk-v1";
+
+    function loadStore() {
+      try {
+        return JSON.parse(localStorage.getItem(STORE_KEY)) || { done: {}, last: null };
+      } catch {
+        return { done: {}, last: null };
+      }
+    }
+
+    function saveStore() {
+      try {
+        localStorage.setItem(STORE_KEY, JSON.stringify(store));
+      } catch {
+        /* private mode: progress simply not persisted */
+      }
+    }
+
+    const store = loadStore();
+
+    /* ---------------- lesson index ---------------- */
+    const rows = Array.from(document.querySelectorAll("[data-resource]"));
+    const lessons = rows.map((row, index) => ({
+      index,
+      row,
+      file: row.dataset.file,
+      track: row.dataset.track,
+      title: row.querySelector(".resource-row-title")?.textContent?.trim() || "Dokumen",
+      src: row.querySelector("[data-open-viewer]")?.dataset.src
+    }));
+    const lessonByFile = new Map(lessons.map((lesson) => [lesson.file, lesson]));
+
+    /* ---------------- filtering ---------------- */
+    const sideItems = Array.from(document.querySelectorAll("[data-filter-track]"));
+    const groups = Array.from(document.querySelectorAll("[data-group]"));
+    const search = document.querySelector("[data-resource-search]");
+    const empty = document.querySelector("[data-empty-state]");
+    const count = document.querySelector("[data-count]");
+    let activeTrack = "all";
+
+    function applyFilters() {
+      const query = (search?.value || "").trim().toLowerCase();
+      let visibleTotal = 0;
+
+      rows.forEach((row) => {
+        const trackMatches = activeTrack === "all" || row.dataset.track === activeTrack;
+        const textMatches = !query || (row.dataset.search || "").includes(query);
+        const visible = trackMatches && textMatches;
+        row.hidden = !visible;
+        if (visible) visibleTotal += 1;
+      });
+
+      groups.forEach((group) => {
+        const anyVisible = group.querySelectorAll("[data-resource]:not([hidden])").length > 0;
+        group.hidden = !anyVisible;
+      });
+
+      if (empty) empty.style.display = visibleTotal ? "none" : "block";
+      if (count) count.textContent = `${visibleTotal} dari ${rows.length} materi`;
+    }
+
+    sideItems.forEach((item) => {
+      item.addEventListener("click", () => {
+        activeTrack = item.dataset.filterTrack || "all";
+        sideItems.forEach((candidate) => {
+          candidate.setAttribute("aria-pressed", String(candidate === item));
+        });
+        applyFilters();
+      });
+    });
+
+    search?.addEventListener("input", applyFilters);
+
+    /* ---------------- progress UI ---------------- */
+    const continueCard = document.querySelector("[data-continue]");
+    const continueTitle = document.querySelector("[data-continue-title]");
+    const continueOpen = document.querySelector("[data-continue-open]");
+    const doneBtn = document.querySelector("[data-lesson-done]");
+
+    function isDone(file) {
+      return Boolean(store.done[file]);
+    }
+
+    function updateProgressUI() {
+      const doneCount = lessons.filter((lesson) => isDone(lesson.file)).length;
+      const percent = lessons.length ? Math.round((doneCount / lessons.length) * 100) : 0;
+
+      const percentEl = document.querySelector("[data-progress-percent]");
+      const doneEl = document.querySelector("[data-progress-done]");
+      const barEl = document.querySelector("[data-progress-bar]");
+      if (percentEl) percentEl.textContent = String(percent);
+      if (doneEl) doneEl.textContent = String(doneCount);
+      if (barEl) barEl.style.width = `${percent}%`;
+
+      sideItems.forEach((item) => {
+        const key = item.dataset.filterTrack;
+        const subset = key === "all" ? lessons : lessons.filter((l) => l.track === key);
+        const subsetDone = subset.filter((lesson) => isDone(lesson.file)).length;
+        const countEl = item.querySelector(`[data-side-count="${key}"]`);
+        const bar = item.querySelector(`[data-side-bar="${key}"]`);
+        if (countEl) countEl.textContent = `${subsetDone}/${subset.length}`;
+        if (bar) bar.style.width = subset.length ? `${(subsetDone / subset.length) * 100}%` : "0%";
+      });
+
+      rows.forEach((row) => {
+        const done = isDone(row.dataset.file);
+        row.classList.toggle("is-done", done);
+        row.querySelector("[data-check]")?.setAttribute("aria-pressed", String(done));
+      });
+
+      const lastLesson = store.last ? lessonByFile.get(store.last) : null;
+      if (continueCard) {
+        if (lastLesson) {
+          continueCard.hidden = false;
+          if (continueTitle) continueTitle.textContent = lastLesson.title;
+        } else {
+          continueCard.hidden = true;
+        }
+      }
+    }
+
+    function setDone(file, done) {
+      if (done) store.done[file] = true;
+      else delete store.done[file];
+      saveStore();
+      updateProgressUI();
+      if (doneBtn && currentLesson && currentLesson.file === file) {
+        doneBtn.setAttribute("aria-pressed", String(done));
+        doneBtn.textContent = done ? "Selesai ✓" : "Tandai selesai ✓";
+      }
+    }
+
+    rows.forEach((row) => {
+      row.querySelector("[data-check]")?.addEventListener("click", () => {
+        setDone(row.dataset.file, !isDone(row.dataset.file));
+      });
+    });
+
+    /* ---------------- PDF viewer ---------------- */
+    const dialog = document.querySelector("[data-viewer]");
+    const stage = document.querySelector("[data-viewer-stage]");
+    const canvas = document.querySelector("[data-viewer-canvas]");
+    const status = document.querySelector("[data-viewer-status]");
+    const titleEl = document.querySelector("[data-viewer-title]");
+    const indicator = document.querySelector("[data-page-indicator]");
+    const prevBtn = document.querySelector("[data-page-prev]");
+    const nextBtn = document.querySelector("[data-page-next]");
+    const zoomInBtn = document.querySelector("[data-zoom-in]");
+    const zoomOutBtn = document.querySelector("[data-zoom-out]");
+    const downloadLink = document.querySelector("[data-viewer-download]");
+    const closeBtn = document.querySelector("[data-viewer-close]");
+    const lessonPrevBtn = document.querySelector("[data-lesson-prev]");
+    const lessonNextBtn = document.querySelector("[data-lesson-next]");
+
+    let loadingTask = null;
+    let pdfDoc = null;
+    let pageNum = 1;
+    let zoom = 1;
+    let renderToken = 0;
+    let currentLesson = null;
+
+    function setStatus(message) {
+      if (!status) return;
+      status.textContent = message || "";
+      status.hidden = !message;
+    }
+
+    function updateControls() {
+      const total = pdfDoc ? pdfDoc.numPages : 0;
+      if (indicator) indicator.textContent = pdfDoc ? `${pageNum} / ${total}` : "– / –";
+      if (prevBtn) prevBtn.disabled = !pdfDoc || pageNum <= 1;
+      if (nextBtn) nextBtn.disabled = !pdfDoc || pageNum >= total;
+      if (zoomOutBtn) zoomOutBtn.disabled = !pdfDoc || zoom <= 0.5;
+      if (zoomInBtn) zoomInBtn.disabled = !pdfDoc || zoom >= 3;
+      if (lessonPrevBtn) lessonPrevBtn.disabled = !currentLesson || currentLesson.index <= 0;
+      if (lessonNextBtn)
+        lessonNextBtn.disabled = !currentLesson || currentLesson.index >= lessons.length - 1;
+    }
+
+    async function renderPage() {
+      if (!pdfDoc || !canvas || !stage) return;
+      const token = ++renderToken;
+      const page = await pdfDoc.getPage(pageNum);
+      if (token !== renderToken) return;
+
+      const baseViewport = page.getViewport({ scale: 1 });
+      const stageWidth = Math.max(stage.clientWidth - 40, 200);
+      const fitScale = Math.min(stageWidth / baseViewport.width, 1.6);
+      const viewport = page.getViewport({ scale: fitScale * zoom });
+      const ratio = window.devicePixelRatio || 1;
+
+      canvas.width = Math.floor(viewport.width * ratio);
+      canvas.height = Math.floor(viewport.height * ratio);
+      canvas.style.width = `${Math.floor(viewport.width)}px`;
+      canvas.style.height = `${Math.floor(viewport.height)}px`;
+      canvas.hidden = false;
+
+      const context = canvas.getContext("2d");
+      await page.render({
+        canvasContext: context,
+        viewport,
+        transform: ratio !== 1 ? [ratio, 0, 0, ratio, 0, 0] : undefined
+      }).promise;
+
+      if (token !== renderToken) return;
+      setStatus("");
+      updateControls();
+    }
+
+    async function openLesson(lesson) {
+      if (!dialog || !lesson?.src) return;
+      currentLesson = lesson;
+      store.last = lesson.file;
+      saveStore();
+      updateProgressUI();
+
+      if (titleEl) titleEl.textContent = lesson.title;
+      if (downloadLink) downloadLink.setAttribute("href", lesson.src);
+      if (doneBtn) {
+        doneBtn.setAttribute("aria-pressed", String(isDone(lesson.file)));
+        doneBtn.textContent = isDone(lesson.file) ? "Selesai ✓" : "Tandai selesai ✓";
+      }
+      if (canvas) canvas.hidden = true;
+      setStatus("Memuat dokumen…");
+      pageNum = 1;
+      zoom = 1;
+      pdfDoc = null;
+      updateControls();
+      if (!dialog.open) dialog.showModal();
+
+      try {
+        loadingTask?.destroy();
+        loadingTask = pdfjsLib.getDocument({
+          url: new URL(lesson.src, window.location.href).href
+        });
+        pdfDoc = await loadingTask.promise;
+        await renderPage();
+      } catch (error) {
+        console.error(error);
+        setStatus("Dokumen tidak bisa dimuat. Coba tombol unduh (↓).");
+      }
+    }
+
+    function closeViewer() {
+      renderToken += 1;
+      loadingTask?.destroy();
+      loadingTask = null;
+      pdfDoc = null;
+      currentLesson = null;
+      if (canvas) canvas.hidden = true;
+      updateControls();
+    }
+
+    rows.forEach((row) => {
+      row.querySelector("[data-open-viewer]")?.addEventListener("click", () => {
+        const lesson = lessonByFile.get(row.dataset.file);
+        if (lesson) openLesson(lesson);
+      });
+    });
+
+    continueOpen?.addEventListener("click", () => {
+      const lesson = store.last ? lessonByFile.get(store.last) : null;
+      if (lesson) openLesson(lesson);
+    });
+
+    lessonPrevBtn?.addEventListener("click", () => {
+      if (currentLesson && currentLesson.index > 0) {
+        openLesson(lessons[currentLesson.index - 1]);
+      }
+    });
+
+    lessonNextBtn?.addEventListener("click", () => {
+      if (currentLesson && currentLesson.index < lessons.length - 1) {
+        openLesson(lessons[currentLesson.index + 1]);
+      }
+    });
+
+    doneBtn?.addEventListener("click", () => {
+      if (currentLesson) setDone(currentLesson.file, !isDone(currentLesson.file));
+    });
+
+    prevBtn?.addEventListener("click", () => {
+      if (pdfDoc && pageNum > 1) {
+        pageNum -= 1;
+        renderPage();
+      }
+    });
+
+    nextBtn?.addEventListener("click", () => {
+      if (pdfDoc && pageNum < pdfDoc.numPages) {
+        pageNum += 1;
+        renderPage();
+      }
+    });
+
+    zoomInBtn?.addEventListener("click", () => {
+      zoom = Math.min(zoom + 0.25, 3);
+      renderPage();
+    });
+
+    zoomOutBtn?.addEventListener("click", () => {
+      zoom = Math.max(zoom - 0.25, 0.5);
+      renderPage();
+    });
+
+    closeBtn?.addEventListener("click", () => dialog?.close());
+    dialog?.addEventListener("close", closeViewer);
+
+    dialog?.addEventListener("click", (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+
+    dialog?.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowLeft") prevBtn?.click();
+      if (event.key === "ArrowRight") nextBtn?.click();
+    });
+
+    let resizeTimer;
+    window.addEventListener("resize", () => {
+      if (!dialog?.open) return;
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(renderPage, 150);
+    });
+
+    updateProgressUI();
+    applyFilters();
+  </script>
+</BaseLayout>
